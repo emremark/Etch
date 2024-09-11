@@ -21,6 +21,11 @@
                 height: 40px;
                 margin-left: 20px;
             }
+            .clear {
+                width: 70px;
+                height: 40px;
+                margin-left: 20px;
+            }
 
         </style>
     </head>
@@ -29,38 +34,51 @@
 
         </div>
         <button class="size">Adjust grid size</button>
+        <button class="clear">Clear grid</button>
         <script>
             const size = document.querySelector(".size");
             size.addEventListener("click", () => {
+                const cont = document.querySelector(".out");
+                cont.innerHTML = "";
                 let grd;
                 while (true) {
-                grd = +prompt("Enter the amount of sqares per side you would like your grid to have\n Best to keep it under 256. :)" );
+                grd = +prompt("Enter the amount of sqares per side you would like your grid to have" );
                 if (grd < 4) {
                     alert("Grid must be more than 4 sqares per side.")
                 }
-                else if (grd % 2 != 0) {
-                    alert("Must be an even number.")
+                else if (grd > 100) {
+                    alert("Must be less than 100.")
                 }
                 else {
                     break
                 }
                 }
                 const side = 800 / grd;
-                const cont = document.querySelector(".out");
+                //const cont = document.querySelector(".out");
 
                 for (let i = 1; i <= (grd * grd); i++) {
                 const divInner = document.createElement("div");
                 divInner.setAttribute("style", `width: ${side}px; height: ${side}px;`);
+                divInner.style.opacity = 0.0;
                 cont.appendChild(divInner);
             }
                 const sqare = document.querySelectorAll(".out div");
                 sqare.forEach((sqr) => {
                     sqr.addEventListener("mouseover", () => {
+                        let currOp = +sqr.style.opacity;
+                        sqr.style.opacity = currOp + 0.1;
                         sqr.style.backgroundColor = "black";
                     })
                 })
             })
+            const clr = document.querySelector(".clear");
+            clr.addEventListener("click", () => {
+                const c = document.querySelectorAll(".out div");
+                c.forEach((cdiv) => {
+                    cdiv.style.backgroundColor = "white";
+                })
 
+            })
 
         </script>
     </body>
